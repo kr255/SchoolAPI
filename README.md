@@ -33,10 +33,23 @@
 |cs_created_date|	NN|
 |cs_updated_date|	
 
-#Course_Assignment	
+### Course_Assignment	
 |Field | Constraint |
 | -----| ---------- |
 |c_id|	FK|
 |ca_title|	NN|
 |ca_description| NN|
 |cs_id	|FK|
+
+### Section_enroll	
+|Field | Constraint |
+| -----| ---------- |
+|cs_id|	FK|
+|se_start_date|	NN|
+|se_end_date|	NN|
+|u_id| 	FK|
+|se_created_date|	NN|
+|se_updated_date|	
+
+![dataDictionary](https://user-images.githubusercontent.com/17055891/123499434-ad431500-d604-11eb-9eeb-187f8761adcb.JPG)
+
