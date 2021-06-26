@@ -32,3 +32,11 @@
 |cs_id |PK NN|
 |cs_created_date|	NN|
 |cs_updated_date|	
+
+#Course_Assignment	
+|Field | Constraint |
+| -----| ---------- |
+|c_id|	FK|
+|ca_title|	NN|
+|ca_description| NN|
+|cs_id	|FK|
