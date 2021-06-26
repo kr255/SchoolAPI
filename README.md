@@ -1,3 +1,3 @@
 # SchoolAPI
 
-### Homework 3 contents 
+### Homework 3 content
