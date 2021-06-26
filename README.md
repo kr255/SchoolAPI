@@ -22,3 +22,13 @@
 |c_description|	
 |c_created_date	|NN|
 |c_updated_date |NN|
+
+### Course_section	
+|Field | Constraint |
+| -----| ---------- |
+|c_id|	FK|
+|cs_start_date|	NN|
+|cs_end_date|	NN|
+|cs_id |PK NN|
+|cs_created_date|	NN|
+|cs_updated_date|	
