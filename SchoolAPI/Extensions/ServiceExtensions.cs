@@ -16,7 +16,8 @@ namespace SchoolAPI.Extensions
 
         public static void ConfigureSQLContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts =>
-                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
+                b.MigrationsAssembly("SchoolAPI")));
         
     }
 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Models
 {
+    [Keyless]
     public class SectionEnroll
     {
         [ForeignKey(nameof(Users))]
@@ -19,5 +21,6 @@ namespace Entities.Models
         public int cs_id { get; set; }
 
         public ICollection<Users> Users { get; set; }
+
     }
 }
