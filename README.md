@@ -53,3 +53,9 @@
 
 ![dataDictionary](https://user-images.githubusercontent.com/17055891/123499434-ad431500-d604-11eb-9eeb-187f8761adcb.JPG)
 
+-------
+
+### Homework 6 Screen shot
+
+
+
