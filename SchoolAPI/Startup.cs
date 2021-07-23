@@ -24,6 +24,7 @@ namespace SchoolAPI
         {
             services.ConfigureLoggerService();
             services.ConfigureSQLContext(Configuration);
+            services.ConfigureRepositoryManager();
             services.AddControllers();
   
         }

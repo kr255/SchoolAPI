@@ -22,8 +22,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <!--<ProjectReference Include="..\Entities\Entities.csproj" />-->
     <ProjectReference Include="..\LoggerService\LoggerManager.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
     
   </ItemGroup>
 

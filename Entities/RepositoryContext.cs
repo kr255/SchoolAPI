@@ -17,8 +17,12 @@ namespace Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new CourseAssignmentConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //modelBuilder.ApplyConfiguration(new CourseAssignmentConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SectionEnrollConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseSectionConfiguration());
+            modelBuilder.ApplyConfiguration(new CoursesConfiguration());
         }
 
         public DbSet<Users> Users { get; set; }
