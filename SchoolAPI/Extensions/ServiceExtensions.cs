@@ -5,6 +5,7 @@ using LoggerService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Entities;
+using Repository;
 
 namespace SchoolAPI.Extensions
 {
@@ -18,6 +19,8 @@ namespace SchoolAPI.Extensions
             services.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
                 b.MigrationsAssembly("SchoolAPI")));
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
         
     }
 

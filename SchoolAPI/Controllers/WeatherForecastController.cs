@@ -12,6 +12,7 @@ namespace SchoolAPI.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private ILoggerManager _logger;
+        private readonly IRepositoryManager _repository;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -19,24 +20,33 @@ namespace SchoolAPI.Controllers
 
         //private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILoggerManager logger)
+        //public WeatherForecastController(ILoggerManager logger)
+        //{
+        //    _logger = logger;
+        //}
+        public WeatherForecastController(IRepositoryManager repositoryManager)
         {
-            _logger = logger;
+            _repository= repositoryManager;
         }
 
+        //[HttpGet]
+        //public IEnumerable<WeatherForecast> Get()
+        //{
+        //    var rng = new Random();
+        //    _logger.LogInfo("info mssg from out controller");
+        //    _logger.LogDebug("Debug message from controller");
+        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        //    {
+        //        Date = DateTime.Now.AddDays(index),
+        //        TemperatureC = rng.Next(-20, 55),
+        //        Summary = Summaries[rng.Next(Summaries.Length)]
+        //    })
+        //    .ToArray();
+        //}
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-            var rng = new Random();
-            _logger.LogInfo("info mssg from out controller");
-            _logger.LogDebug("Debug message from controller");
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return new string[] { "val1", "val2" };
         }
     }
 }

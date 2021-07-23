@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
-
+using Entities.Configuration;
 
 namespace Entities
 {
@@ -15,10 +15,15 @@ namespace Entities
             
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //modelBuilder.ApplyConfiguration(new CourseAssignmentConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SectionEnrollConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseSectionConfiguration());
+            modelBuilder.ApplyConfiguration(new CoursesConfiguration());
+        }
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Courses> Courses { get; set; }
