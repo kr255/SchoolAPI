@@ -11,5 +11,10 @@ namespace Repository
     {
         public CoursesRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
+
+        public IEnumerable<Courses> GetAllCourses(bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

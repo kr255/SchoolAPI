@@ -12,5 +12,10 @@ namespace Repository
     {
         public SectionEnrollRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
+
+        public IEnumerable<SectionEnroll> GetAllEnrollSections(bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

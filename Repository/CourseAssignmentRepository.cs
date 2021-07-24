@@ -11,5 +11,10 @@ namespace Repository
     {
         public CourseAssignmentRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
+
+        public IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
