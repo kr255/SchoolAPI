@@ -57,5 +57,6 @@
 
 ### Homework 6 Screen shot
 
+![IS690GetHTTP](https://user-images.githubusercontent.com/17055891/126851332-a5ac6cd0-00d2-405f-a17c-e06976044579.JPG)
 
 
