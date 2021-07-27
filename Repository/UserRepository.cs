@@ -13,6 +13,13 @@ namespace Repository
         public UserRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
-        public IEnumerable<Users> GetAllUsers(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.user_id).ToList();
+        public IEnumerable<Users> GetAllUsers(bool trackChanges) => 
+            FindAll(trackChanges)
+            .OrderBy(c => c.user_id)
+            .ToList();
+
+        public Users GetUser(int id, bool trackChanges) =>
+            FindByCondition(c => c.user_id.Equals(id), trackChanges)
+            .SingleOrDefault();
     }
 }

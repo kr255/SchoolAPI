@@ -16,7 +16,8 @@ namespace Entities.Configuration
                 new CourseSection
                 {
                     course_id = 999,
-                    cs_id = 999
+                    cs_id = 999,
+                    
                 }
             );
         }

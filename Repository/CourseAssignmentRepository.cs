@@ -3,6 +3,7 @@ using Entities;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Repository
@@ -12,9 +13,9 @@ namespace Repository
         public CourseAssignmentRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
-        public IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges) =>
+         FindAll(trackChanges)
+        .OrderBy(c => c.cs_id)
+        .ToList();
     }
 }

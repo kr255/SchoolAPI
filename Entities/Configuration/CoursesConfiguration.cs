@@ -18,6 +18,18 @@ namespace Entities.Configuration
                     course_id = 999,
                     course_name = "Test Course",
                     course_description = "Test Course Description"
+                },
+                new Courses
+                {
+                    course_id = 99,
+                    course_name = "Test Course",
+                    course_description = "Test Course Description"
+                },
+                new Courses
+                {
+                    course_id = 9,
+                    course_name = "Test Course",
+                    course_description = "Test Course Description"
                 }
             );
         }

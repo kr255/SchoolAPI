@@ -4,6 +4,7 @@ using Entities;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Repository
@@ -13,9 +14,9 @@ namespace Repository
         public SectionEnrollRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
-        public IEnumerable<SectionEnroll> GetAllEnrollSections(bool trackChanges)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<SectionEnroll> GetAllEnrollSections(bool trackChanges) =>
+         FindAll(trackChanges)
+        .OrderBy(c => c.user_id)
+        .ToList();
     }
 }

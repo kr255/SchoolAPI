@@ -8,5 +8,7 @@ namespace Contracts
     public interface IUserRepository
     {
         IEnumerable<Users> GetAllUsers(bool trackChanges);
+        Users GetUser(int id, bool trackChanges);
+
     }
 }

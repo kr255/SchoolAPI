@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using SchoolAPI.Extensions;
 using System.IO;
 using NLog;
+using Contracts;
 
 namespace SchoolAPI
 {
@@ -26,17 +27,22 @@ namespace SchoolAPI
             services.ConfigureSQLContext(Configuration);
             services.ConfigureRepositoryManager();
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager loggerManager)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseHsts();
+            }
+            app.ConfigureExceptionHandler(loggerManager);
             app.UseHttpsRedirection();
 
             app.UseRouting();

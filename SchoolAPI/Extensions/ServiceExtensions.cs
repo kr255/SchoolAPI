@@ -6,22 +6,35 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Entities;
 using Repository;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Entities.ErrorModel;
+using Microsoft.AspNetCore.Http;
 
 namespace SchoolAPI.Extensions
 {
-    public static class ServiceExtentions
+    public static class ExceptionMiddlewareExtensions
     {
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)
+        {
+            app.UseExceptionHandler(appError => 
+                { 
+                    appError.Run(async context => 
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "application/json";
+                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                        if (contextFeature != null)
+                        { 
+                            logger.LogError($"Something went wrong: {contextFeature.Error}"); 
+                            await context.Response.WriteAsync(new ErrorDetails()
+                            { 
+                                StatusCode = context.Response.StatusCode, Message = "Internal Server Error."
+                            }.ToString());
+                        } });
+                });
+        }
 
-        public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
-
-        public static void ConfigureSQLContext(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<RepositoryContext>(opts =>
-                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
-                b.MigrationsAssembly("SchoolAPI")));
-        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
-            services.AddScoped<IRepositoryManager, RepositoryManager>();
-        
     }
 
 
