@@ -21,7 +21,9 @@ namespace Entities.Configuration
                     password = "TESTtest",
                     email = "testStudent@school.com",
                     enroll_status = status.FRESHMAN,
-                    sys_role_id = system_role_id.STUDENT
+                    sys_role_id = system_role_id.STUDENT,
+                    created_date =  new DateTime(2020, 1, 1),
+                    updated_date = new DateTime(2020, 1, 1)
 
                 }
                 

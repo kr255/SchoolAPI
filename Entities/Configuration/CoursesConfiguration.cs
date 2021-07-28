@@ -17,19 +17,26 @@ namespace Entities.Configuration
                 { 
                     course_id = 999,
                     course_name = "Test Course",
-                    course_description = "Test Course Description"
+                    course_description = "Test Course Description",
+                    course_created_date = new DateTime(2020, 1, 1),
+                    course_updated_date = new DateTime(2020, 1, 1)
+
                 },
                 new Courses
                 {
                     course_id = 99,
                     course_name = "Test Course",
-                    course_description = "Test Course Description"
+                    course_description = "Test Course Description",
+                    course_created_date = new DateTime(2020, 1, 1),
+                    course_updated_date = new DateTime(2020, 1, 1)
                 },
                 new Courses
                 {
                     course_id = 9,
                     course_name = "Test Course",
-                    course_description = "Test Course Description"
+                    course_description = "Test Course Description",
+                    course_created_date = new DateTime(2020, 1, 1),
+                    course_updated_date = new DateTime(2020, 1, 1)
                 }
             );
         }

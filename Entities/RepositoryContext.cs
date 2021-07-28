@@ -19,7 +19,7 @@ namespace Entities
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new CourseAssignmentConfiguration());
-
+            modelBuilder.Entity<StudentSectionEnroll>().HasKey(sc => new { sc.user_id, sc.section_key});
             modelBuilder.ApplyConfiguration(new SectionEnrollConfiguration());
             modelBuilder.ApplyConfiguration(new CourseSectionConfiguration());
             modelBuilder.ApplyConfiguration(new CoursesConfiguration());

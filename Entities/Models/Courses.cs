@@ -13,7 +13,8 @@ namespace Entities.Models
         public string course_description { get; set; }
         public DateTime course_created_date { get; set; }
         public DateTime course_updated_date { get; set; }
-        
-        ICollection<CourseSection> courseSection { get; set; }
+
+
+        ICollection<CourseSection> CourseSection { get; set; }
     }
 }

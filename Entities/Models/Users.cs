@@ -23,6 +23,6 @@ namespace Entities.Models
         public DateTime created_date { get; set;}
         public DateTime updated_date { get; set;}
 
-        //public ICollection<Users> All_Users { get; set; }
+        public ICollection<StudentSectionEnroll> allEnrolledSections{ get; set; }
     }
 }
