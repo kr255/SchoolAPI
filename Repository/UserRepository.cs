@@ -15,11 +15,13 @@ namespace Repository
 
         public IEnumerable<Users> GetAllUsers(bool trackChanges) => 
             FindAll(trackChanges)
-            .OrderBy(c => c.user_id)
+            .OrderBy(c => c.UserId)
             .ToList();
 
         public Users GetUser(int id, bool trackChanges) =>
-            FindByCondition(c => c.user_id.Equals(id), trackChanges)
+            FindByCondition(c => c.UserId.Equals(id), trackChanges)
             .SingleOrDefault();
+
+        public void CreateUser(Users user) => Create(user);
     }
 }

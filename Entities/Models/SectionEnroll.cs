@@ -10,10 +10,12 @@ namespace Entities.Models
     public class SectionEnroll
     {
         [Key]
+        [Column("section_enroll_key")]
+
         public int section_key { get; set; }
         
-        [ForeignKey(nameof(Users))]
-        public int  user_id { get; set; }
+        [ForeignKey(nameof(StudentSectionEnroll))]
+        public int user_id { get; set; }
         public ICollection<StudentSectionEnroll> allEnrolledSections { get; set; }
 
         public DateTime se_created_date { get; set; }
@@ -22,8 +24,8 @@ namespace Entities.Models
         public DateTime se_end_date { get; set; }
 
         [ForeignKey(nameof(CourseSection))]
-        public int cs_id { get; set; }
-        public CourseSection CourseSection { get; set; }
+        public int course_section_id { get; set; }
+        public ICollection<CoursesSectionEnroll> CoursesSectionEnroll { get; set; }
 
     }
 }

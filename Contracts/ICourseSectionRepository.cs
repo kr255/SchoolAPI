@@ -6,7 +6,9 @@ namespace Contracts
 {
     public interface ICourseSectionRepository
     {
-        IEnumerable<CourseSection> GetAllSections(bool trackChanges);
+        IEnumerable<CourseSection> GetAllSections(int cid, bool trackChanges);
+        public CourseSection GetSectionById(int cid, int csid, bool trackChanges);
 
+        void CreateSection(int cid, CourseSection section);
     }
 }

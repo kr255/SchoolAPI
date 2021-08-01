@@ -15,12 +15,13 @@ namespace Entities.Configuration
             (
                 new CourseSection
                 {
-                    course_id = 999,
                     cs_id = 999,
                     cs_create_date = new DateTime(2020, 1, 1),
                     cs_end_date = new DateTime(2020, 6, 1),
                     cs_start_date = new DateTime(2020, 1, 1),
-                    cs_update_date = new DateTime(2020, 1, 1)
+                    cs_update_date = new DateTime(2020, 1, 1),
+                    courseid = 99
+
                     
                 }
             );

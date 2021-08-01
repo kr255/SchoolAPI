@@ -12,7 +12,7 @@ using Entities.DataTransferObjects;
 namespace SchoolAPI.Controllers
 {
     [ApiController]
-    [Route("api/course/assignment")]
+    [Route("api/{course}/{courseSection}/assignments")]
     public class CourseAssignmentController : ControllerBase
     {
         private ILoggerManager _logger;
@@ -32,6 +32,24 @@ namespace SchoolAPI.Controllers
             var coursesAssignments = _repository.CourseAssignment.GetAllAssignments(trackChanges: false);
             var CourseAssignmentDTO = _mapper.Map<IEnumerable<CourseAssignmentDTO>>(coursesAssignments);
             return Ok(CourseAssignmentDTO);
+
+        }
+        [HttpGet("{cid}")]
+        public IActionResult GetCourseAssignment(int cid)
+        {
+            var coursesAssignments = _repository.CourseAssignment.GetAssignment(cid, trackChanges: false);
+            if (coursesAssignments == null)
+            {
+                _logger.LogInfo($"Assignment with id: {cid} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var CourseAssignmentDTO = _mapper.Map<IEnumerable<CourseAssignmentDTO>>(coursesAssignments);
+                return Ok(CourseAssignmentDTO);
+            }
+
+            
 
         }
 

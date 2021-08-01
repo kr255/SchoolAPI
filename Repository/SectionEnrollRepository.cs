@@ -16,7 +16,7 @@ namespace Repository
 
         public IEnumerable<SectionEnroll> GetAllEnrollSections(bool trackChanges) =>
          FindAll(trackChanges)
-        .OrderBy(c => c.user_id)
+        .OrderBy(c => c.section_key)
         .ToList();
     }
 }

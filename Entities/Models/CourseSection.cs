@@ -8,6 +8,7 @@ namespace Entities.Models
     public class CourseSection
     {
         [Key]
+        [Column("course_section_id")]
         public int cs_id { get; set; }
         public DateTime cs_create_date { get; set; }
         public DateTime cs_update_date { get; set; }
@@ -16,7 +17,7 @@ namespace Entities.Models
         public ICollection<CourseAssignment> courseAssignments { get; set; }
 
         [ForeignKey(nameof(Courses))]
-        public int course_id { get; set; }
+        public int courseid { get; set; }
         public Courses course { get; set; }
     }
 }

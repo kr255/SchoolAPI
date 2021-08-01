@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SchoolAPI.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210728200035_initialData2")]
-    partial class initialData2
+    [Migration("20210730234219_initialdata2")]
+    partial class initialdata2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,15 +24,13 @@ namespace SchoolAPI.Migrations
             modelBuilder.Entity("Entities.Models.CourseAssignment", b =>
                 {
                     b.Property<string>("ca_title")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("course_assignment_title");
 
                     b.Property<string>("ca_description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("course_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("cs_id")
+                    b.Property<int>("course_section_id")
                         .HasColumnType("int");
 
                     b.Property<int?>("sectioncs_id")
@@ -49,8 +47,7 @@ namespace SchoolAPI.Migrations
                         {
                             ca_title = "Testing Title Man",
                             ca_description = "Description of Title",
-                            course_id = 999,
-                            cs_id = 999
+                            course_section_id = 999
                         });
                 });
 
@@ -59,12 +56,10 @@ namespace SchoolAPI.Migrations
                     b.Property<int>("cs_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("course_section_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("course_id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("course_id1")
+                    b.Property<int>("courseid")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("cs_create_date")
@@ -81,7 +76,7 @@ namespace SchoolAPI.Migrations
 
                     b.HasKey("cs_id");
 
-                    b.HasIndex("course_id1");
+                    b.HasIndex("courseid");
 
                     b.ToTable("CourseSections");
 
@@ -89,7 +84,7 @@ namespace SchoolAPI.Migrations
                         new
                         {
                             cs_id = 999,
-                            course_id = 999,
+                            courseid = 99,
                             cs_create_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             cs_end_date = new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             cs_start_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -99,9 +94,10 @@ namespace SchoolAPI.Migrations
 
             modelBuilder.Entity("Entities.Models.Courses", b =>
                 {
-                    b.Property<int>("course_id")
+                    b.Property<int>("courseid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("course_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("course_created_date")
@@ -116,14 +112,14 @@ namespace SchoolAPI.Migrations
                     b.Property<DateTime>("course_updated_date")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("course_id");
+                    b.HasKey("courseid");
 
                     b.ToTable("Courses");
 
                     b.HasData(
                         new
                         {
-                            course_id = 999,
+                            courseid = 999,
                             course_created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             course_description = "Test Course Description",
                             course_name = "Test Course",
@@ -131,7 +127,7 @@ namespace SchoolAPI.Migrations
                         },
                         new
                         {
-                            course_id = 99,
+                            courseid = 99,
                             course_created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             course_description = "Test Course Description",
                             course_name = "Test Course",
@@ -139,7 +135,7 @@ namespace SchoolAPI.Migrations
                         },
                         new
                         {
-                            course_id = 9,
+                            courseid = 9,
                             course_created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             course_description = "Test Course Description",
                             course_name = "Test Course",
@@ -147,14 +143,38 @@ namespace SchoolAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entities.Models.CoursesSectionEnroll", b =>
+                {
+                    b.Property<int>("cs_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("section_key")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("courseSectioncs_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("section_key1")
+                        .HasColumnType("int");
+
+                    b.HasKey("cs_id", "section_key");
+
+                    b.HasIndex("courseSectioncs_id");
+
+                    b.HasIndex("section_key1");
+
+                    b.ToTable("CoursesSectionEnroll");
+                });
+
             modelBuilder.Entity("Entities.Models.SectionEnroll", b =>
                 {
                     b.Property<int>("section_key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("section_enroll_key")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("cs_id")
+                    b.Property<int>("course_section_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("se_created_date")
@@ -174,15 +194,13 @@ namespace SchoolAPI.Migrations
 
                     b.HasKey("section_key");
 
-                    b.HasIndex("cs_id");
-
                     b.ToTable("SectionEnrolls");
 
                     b.HasData(
                         new
                         {
                             section_key = 9,
-                            cs_id = 999,
+                            course_section_id = 999,
                             se_created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             se_end_date = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             se_start_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -194,31 +212,34 @@ namespace SchoolAPI.Migrations
             modelBuilder.Entity("Entities.Models.StudentSectionEnroll", b =>
                 {
                     b.Property<int>("user_id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
 
                     b.Property<int>("section_key")
+                        .HasColumnType("int")
+                        .HasColumnName("section_enroll_key");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int?>("section_key1")
                         .HasColumnType("int");
 
-                    b.Property<int?>("user_id1")
-                        .HasColumnType("int");
-
                     b.HasKey("user_id", "section_key");
 
-                    b.HasIndex("section_key1");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("user_id1");
+                    b.HasIndex("section_key1");
 
                     b.ToTable("StudentSectionEnroll");
                 });
 
             modelBuilder.Entity("Entities.Models.Users", b =>
                 {
-                    b.Property<int>("user_id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("user_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("created_date")
@@ -239,27 +260,43 @@ namespace SchoolAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("section_enroll_key")
+                        .HasColumnType("int");
+
                     b.Property<int>("sys_role_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("updated_date")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("user_id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
-                            user_id = 999,
+                            UserId = 999,
                             created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             email = "testStudent@school.com",
                             enroll_status = 0,
                             name = "Test User",
                             password = "TESTtest",
+                            section_enroll_key = 0,
                             sys_role_id = 0,
                             updated_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            UserId = 99,
+                            created_date = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            email = "testStudent2@school.com",
+                            enroll_status = 1,
+                            name = "Test User 2",
+                            password = "TESTtest2",
+                            section_enroll_key = 0,
+                            sys_role_id = 0,
+                            updated_date = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -276,31 +313,37 @@ namespace SchoolAPI.Migrations
                 {
                     b.HasOne("Entities.Models.Courses", "course")
                         .WithMany()
-                        .HasForeignKey("course_id1");
+                        .HasForeignKey("courseid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("course");
                 });
 
-            modelBuilder.Entity("Entities.Models.SectionEnroll", b =>
+            modelBuilder.Entity("Entities.Models.CoursesSectionEnroll", b =>
                 {
-                    b.HasOne("Entities.Models.CourseSection", "CourseSection")
+                    b.HasOne("Entities.Models.CourseSection", "courseSection")
                         .WithMany()
-                        .HasForeignKey("cs_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("courseSectioncs_id");
 
-                    b.Navigation("CourseSection");
+                    b.HasOne("Entities.Models.SectionEnroll", "section")
+                        .WithMany("CoursesSectionEnroll")
+                        .HasForeignKey("section_key1");
+
+                    b.Navigation("courseSection");
+
+                    b.Navigation("section");
                 });
 
             modelBuilder.Entity("Entities.Models.StudentSectionEnroll", b =>
                 {
+                    b.HasOne("Entities.Models.Users", "user")
+                        .WithMany("allEnrolledSections")
+                        .HasForeignKey("UserId");
+
                     b.HasOne("Entities.Models.SectionEnroll", "section")
                         .WithMany("allEnrolledSections")
                         .HasForeignKey("section_key1");
-
-                    b.HasOne("Entities.Models.Users", "user")
-                        .WithMany("allEnrolledSections")
-                        .HasForeignKey("user_id1");
 
                     b.Navigation("section");
 
@@ -315,6 +358,8 @@ namespace SchoolAPI.Migrations
             modelBuilder.Entity("Entities.Models.SectionEnroll", b =>
                 {
                     b.Navigation("allEnrolledSections");
+
+                    b.Navigation("CoursesSectionEnroll");
                 });
 
             modelBuilder.Entity("Entities.Models.Users", b =>

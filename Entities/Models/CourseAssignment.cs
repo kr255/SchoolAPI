@@ -10,14 +10,14 @@ namespace Entities.Models
     public class CourseAssignment
     {
         [Key]
+        [Column("course_assignment_title")]
+
         public string ca_title { get; set; }
         public string ca_description { get; set; }
 
-        //[ForeignKey(nameof(Courses))]
-        public int course_id { get; set; }
 
         [ForeignKey(nameof(CourseSection))]
-        public int cs_id { get; set; }
+        public int course_section_id { get; set; }
         public CourseSection section { get; set; }
 
     }

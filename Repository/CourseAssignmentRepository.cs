@@ -15,7 +15,14 @@ namespace Repository
 
         public IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges) =>
          FindAll(trackChanges)
-        .OrderBy(c => c.cs_id)
+        .OrderBy(c => c.course_section_id)
         .ToList();
+
+        public IEnumerable<CourseAssignment> GetAssignment(int sectionID, bool trackChanges) =>
+        
+            FindByCondition(e => e.course_section_id.Equals(sectionID), trackChanges)
+            .OrderBy(c => c.ca_title)
+            .ToList();
+        
     }
 }

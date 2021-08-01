@@ -7,6 +7,8 @@ namespace Contracts
     public interface ICourseAssignmentRepository
     {
         IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges);
+        IEnumerable<CourseAssignment> GetAssignment(int sectionID, bool trackChanges);
+
 
     }
 }

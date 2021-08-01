@@ -8,6 +8,9 @@ namespace Contracts
     public interface ICoursesRepository
     {
         IEnumerable<Courses> GetAllCourses(bool trackChanges);
+        public Courses GetCourseById(int courseID, bool trackChanges);
+
+        public void CreateCourse(Courses course);
 
     }
 }

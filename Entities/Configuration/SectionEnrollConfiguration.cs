@@ -17,7 +17,7 @@ namespace Entities.Configuration
                 {
                     section_key = 009,
                     user_id = 999,
-                    cs_id = 999,
+                    course_section_id = 999,
                     se_created_date =  new DateTime(2020, 1, 1),
                     se_end_date = new DateTime(2020, 5, 1),
                     se_start_date = new DateTime(2020, 1, 1),

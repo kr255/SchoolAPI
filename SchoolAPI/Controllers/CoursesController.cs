@@ -7,8 +7,7 @@ using System.Linq;
 using Contracts;
 using Entities.DataTransferObjects;
 using AutoMapper;
-
-
+using Entities.Models;
 
 namespace SchoolAPI.Controllers
 {
@@ -38,6 +37,44 @@ namespace SchoolAPI.Controllers
             var CoursesDTO = _mapper.Map<IEnumerable<CoursesDTO>>(courses);
             return Ok(CoursesDTO);
 
+        }
+
+        [HttpGet("{cid}", Name ="CourseById")]
+        public IActionResult getGetCourseById(int cid)
+        {
+            //throw new Exception("Exception");
+            var course = _repository.Courses.GetCourseById(cid, trackChanges: false);
+
+            if (course == null)
+            {
+
+                _logger.LogInfo($"Course with id: {cid} doesn't exist in the database.");
+                return NotFound();
+
+            }
+
+            var CoursesDTO = _mapper.Map<CoursesDTO>(course);
+            return Ok(CoursesDTO);
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateCourse([FromBody] CoursesDTOForCreating course)
+        {
+            if (course == null)
+            {
+
+                _logger.LogError("CoursesDTOForCreating object sent from client is null.");
+                return BadRequest("CoursesDTOForCreating object is null");
+            }
+
+            var courseEntity = _mapper.Map<Courses>(course);
+
+            _repository.Courses.CreateCourse(courseEntity);
+            _repository.Save();
+
+            var courseToReturn = _mapper.Map<CoursesDTO>(courseEntity);
+            return CreatedAtRoute("CourseById", new { cid = courseToReturn.course_id }, courseToReturn);
         }
 
 

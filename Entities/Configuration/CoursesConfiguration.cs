@@ -15,7 +15,7 @@ namespace Entities.Configuration
             (
                 new Courses 
                 { 
-                    course_id = 999,
+                    courseid = 999,
                     course_name = "Test Course",
                     course_description = "Test Course Description",
                     course_created_date = new DateTime(2020, 1, 1),
@@ -24,7 +24,7 @@ namespace Entities.Configuration
                 },
                 new Courses
                 {
-                    course_id = 99,
+                    courseid = 99,
                     course_name = "Test Course",
                     course_description = "Test Course Description",
                     course_created_date = new DateTime(2020, 1, 1),
@@ -32,7 +32,7 @@ namespace Entities.Configuration
                 },
                 new Courses
                 {
-                    course_id = 9,
+                    courseid = 9,
                     course_name = "Test Course",
                     course_description = "Test Course Description",
                     course_created_date = new DateTime(2020, 1, 1),

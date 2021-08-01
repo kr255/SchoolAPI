@@ -10,7 +10,9 @@ namespace Entities.Models
     public class Users
     {
         [Key]
-        public int user_id { get; set; }
+        [Column("user_id")]
+
+        public int UserId { get; set; }
 
         [Required(ErrorMessage = "student name is a required field.")]
         public string name { get; set;}
@@ -23,6 +25,9 @@ namespace Entities.Models
         public DateTime created_date { get; set;}
         public DateTime updated_date { get; set;}
 
+        [ForeignKey(nameof(StudentSectionEnroll))]
+
+        public int section_enroll_key { get; set; }
         public ICollection<StudentSectionEnroll> allEnrolledSections{ get; set; }
     }
 }

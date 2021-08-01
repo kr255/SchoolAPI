@@ -7,6 +7,7 @@ using System.Linq;
 using Contracts;
 using Entities.DataTransferObjects;
 using AutoMapper;
+using Entities.Models;
 
 namespace SchoolAPI.Controllers
 {
@@ -45,7 +46,7 @@ namespace SchoolAPI.Controllers
                 return Ok(UsersDTO);
 
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "UserById")]
         public IActionResult GetUser(int id)
         {
             var user = _repository.Users.GetUser(id, trackChanges: false);
@@ -61,6 +62,31 @@ namespace SchoolAPI.Controllers
 
             }
 
+        }
+        [HttpPost]
+        public IActionResult CreateUser([FromBody]UsersDTOForCreating user) 
+        {
+            if (user == null)
+            {
+
+                _logger.LogError("UsersDTOForCreating object sent from client is null.");
+                return BadRequest("UsersDTOForCreating object is null");
+            }
+            //var newUserEntity = new Users();
+
+            //newUserEntity.name = user.name;
+            //newUserEntity.email = user.email;
+            //newUserEntity.password = user.password;
+            //newUserEntity.enroll_status = user.enroll_status;
+            //newUserEntity.sys_role_id = user.sys_role_id;
+            
+            var userEntity = _mapper.Map<Users>(user);
+            
+            _repository.Users.CreateUser(userEntity);
+            _repository.Save();
+
+            var userToReturn = _mapper.Map<UsersDTO>(userEntity);
+            return CreatedAtRoute( "UserById", new { id = userToReturn.UserId }, userToReturn);
         }
 
     }
