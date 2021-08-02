@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SchoolAPI.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210730234219_initialdata2")]
-    partial class initialdata2
+    [Migration("20210802160641_initData")]
+    partial class initData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,15 +30,12 @@ namespace SchoolAPI.Migrations
                     b.Property<string>("ca_description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("course_section_id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("sectioncs_id")
+                    b.Property<int>("cs_id")
                         .HasColumnType("int");
 
                     b.HasKey("ca_title");
 
-                    b.HasIndex("sectioncs_id");
+                    b.HasIndex("cs_id");
 
                     b.ToTable("CourseAssignments");
 
@@ -47,7 +44,7 @@ namespace SchoolAPI.Migrations
                         {
                             ca_title = "Testing Title Man",
                             ca_description = "Description of Title",
-                            course_section_id = 999
+                            cs_id = 999
                         });
                 });
 
@@ -151,17 +148,17 @@ namespace SchoolAPI.Migrations
                     b.Property<int>("section_key")
                         .HasColumnType("int");
 
-                    b.Property<int?>("courseSectioncs_id")
+                    b.Property<int?>("CourseSectioncs_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("section_key1")
+                    b.Property<int?>("SectionEnrollsection_key")
                         .HasColumnType("int");
 
                     b.HasKey("cs_id", "section_key");
 
-                    b.HasIndex("courseSectioncs_id");
+                    b.HasIndex("CourseSectioncs_id");
 
-                    b.HasIndex("section_key1");
+                    b.HasIndex("SectionEnrollsection_key");
 
                     b.ToTable("CoursesSectionEnroll");
                 });
@@ -173,9 +170,6 @@ namespace SchoolAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("section_enroll_key")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("course_section_id")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("se_created_date")
                         .HasColumnType("datetime2");
@@ -189,9 +183,6 @@ namespace SchoolAPI.Migrations
                     b.Property<DateTime>("se_updated_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("user_id")
-                        .HasColumnType("int");
-
                     b.HasKey("section_key");
 
                     b.ToTable("SectionEnrolls");
@@ -200,36 +191,27 @@ namespace SchoolAPI.Migrations
                         new
                         {
                             section_key = 9,
-                            course_section_id = 999,
                             se_created_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             se_end_date = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             se_start_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            se_updated_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            user_id = 999
+                            se_updated_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
             modelBuilder.Entity("Entities.Models.StudentSectionEnroll", b =>
                 {
-                    b.Property<int>("user_id")
-                        .HasColumnType("int")
-                        .HasColumnName("user_id");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("section_key")
-                        .HasColumnType("int")
-                        .HasColumnName("section_enroll_key");
-
-                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("section_key1")
+                    b.Property<int?>("SectionEnrollsection_key")
                         .HasColumnType("int");
 
-                    b.HasKey("user_id", "section_key");
+                    b.HasKey("UserId", "section_key");
 
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("section_key1");
+                    b.HasIndex("SectionEnrollsection_key");
 
                     b.ToTable("StudentSectionEnroll");
                 });
@@ -260,9 +242,6 @@ namespace SchoolAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("section_enroll_key")
-                        .HasColumnType("int");
-
                     b.Property<int>("sys_role_id")
                         .HasColumnType("int");
 
@@ -282,7 +261,6 @@ namespace SchoolAPI.Migrations
                             enroll_status = 0,
                             name = "Test User",
                             password = "TESTtest",
-                            section_enroll_key = 0,
                             sys_role_id = 0,
                             updated_date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -294,7 +272,6 @@ namespace SchoolAPI.Migrations
                             enroll_status = 1,
                             name = "Test User 2",
                             password = "TESTtest2",
-                            section_enroll_key = 0,
                             sys_role_id = 0,
                             updated_date = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -302,11 +279,13 @@ namespace SchoolAPI.Migrations
 
             modelBuilder.Entity("Entities.Models.CourseAssignment", b =>
                 {
-                    b.HasOne("Entities.Models.CourseSection", "section")
-                        .WithMany("courseAssignments")
-                        .HasForeignKey("sectioncs_id");
+                    b.HasOne("Entities.Models.CourseSection", "CourseSection")
+                        .WithMany()
+                        .HasForeignKey("cs_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("section");
+                    b.Navigation("CourseSection");
                 });
 
             modelBuilder.Entity("Entities.Models.CourseSection", b =>
@@ -322,49 +301,51 @@ namespace SchoolAPI.Migrations
 
             modelBuilder.Entity("Entities.Models.CoursesSectionEnroll", b =>
                 {
-                    b.HasOne("Entities.Models.CourseSection", "courseSection")
-                        .WithMany()
-                        .HasForeignKey("courseSectioncs_id");
-
-                    b.HasOne("Entities.Models.SectionEnroll", "section")
+                    b.HasOne("Entities.Models.CourseSection", "CourseSection")
                         .WithMany("CoursesSectionEnroll")
-                        .HasForeignKey("section_key1");
+                        .HasForeignKey("CourseSectioncs_id");
 
-                    b.Navigation("courseSection");
+                    b.HasOne("Entities.Models.SectionEnroll", "SectionEnroll")
+                        .WithMany("CoursesSectionEnroll")
+                        .HasForeignKey("SectionEnrollsection_key");
 
-                    b.Navigation("section");
+                    b.Navigation("CourseSection");
+
+                    b.Navigation("SectionEnroll");
                 });
 
             modelBuilder.Entity("Entities.Models.StudentSectionEnroll", b =>
                 {
-                    b.HasOne("Entities.Models.Users", "user")
-                        .WithMany("allEnrolledSections")
-                        .HasForeignKey("UserId");
+                    b.HasOne("Entities.Models.SectionEnroll", "SectionEnroll")
+                        .WithMany("StudentSectionEnroll")
+                        .HasForeignKey("SectionEnrollsection_key");
 
-                    b.HasOne("Entities.Models.SectionEnroll", "section")
-                        .WithMany("allEnrolledSections")
-                        .HasForeignKey("section_key1");
+                    b.HasOne("Entities.Models.Users", "User")
+                        .WithMany("StudentSectionEnroll")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("section");
+                    b.Navigation("SectionEnroll");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Models.CourseSection", b =>
                 {
-                    b.Navigation("courseAssignments");
+                    b.Navigation("CoursesSectionEnroll");
                 });
 
             modelBuilder.Entity("Entities.Models.SectionEnroll", b =>
                 {
-                    b.Navigation("allEnrolledSections");
-
                     b.Navigation("CoursesSectionEnroll");
+
+                    b.Navigation("StudentSectionEnroll");
                 });
 
             modelBuilder.Entity("Entities.Models.Users", b =>
                 {
-                    b.Navigation("allEnrolledSections");
+                    b.Navigation("StudentSectionEnroll");
                 });
 #pragma warning restore 612, 618
         }

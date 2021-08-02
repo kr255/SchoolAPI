@@ -6,7 +6,7 @@ namespace Entities.DataTransferObjects
 {
     public class CoursesDTO
     {
-        public int course_id { get; set; }
+        public int courseid { get; set; }
         public string course_name { get; set; }
         public string course_description { get; set; }
         public DateTime course_created_date { get; set; }

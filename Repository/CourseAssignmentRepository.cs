@@ -13,16 +13,26 @@ namespace Repository
         public CourseAssignmentRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         { }
 
+        public void CreateAssignment(int cid, int csid, CourseAssignment assignment)
+        {
+            
+            assignment.cs_id = csid;
+            Create(assignment);
+
+        }
+
         public IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges) =>
          FindAll(trackChanges)
-        .OrderBy(c => c.course_section_id)
+        .OrderBy(c => c.cs_id)
         .ToList();
 
-        public IEnumerable<CourseAssignment> GetAssignment(int sectionID, bool trackChanges) =>
-        
-            FindByCondition(e => e.course_section_id.Equals(sectionID), trackChanges)
-            .OrderBy(c => c.ca_title)
-            .ToList();
+        public CourseAssignment GetAssignment(string title, bool trackChanges) =>
+            FindByCondition(e => e.ca_title == (title), trackChanges)
+            .SingleOrDefault();
+
+
         
     }
+
+
 }

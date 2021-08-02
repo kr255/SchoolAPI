@@ -23,7 +23,7 @@ namespace SchoolAPI {
 			
 			CreateMap<CourseAssignment, CourseAssignmentDTO>()
 				.ForMember(c => c.FullRecord,
-					opt => opt.MapFrom(x => string.Join(' ', x.course_section_id, x.ca_title, x.ca_description)));
+					opt => opt.MapFrom(x => string.Join(' ', x.cs_id, x.ca_title, x.ca_description)));
 
 			CreateMap<CourseSection, CourseSectionDTO>()
 			.ForMember(c => c.FullRecord,
@@ -33,11 +33,12 @@ namespace SchoolAPI {
 
 			CreateMap<SectionEnroll, SectionEnrollDTO>()
 				.ForMember(c => c.FullRecord,
-					opt => opt.MapFrom(x => string.Join(' ', x.section_key, x.user_id, x.se_created_date, x.se_updated_date, x.se_start_date, x.se_end_date)));
+					opt => opt.MapFrom(x => string.Join(' ', x.section_key, x.se_created_date, x.se_updated_date, x.se_start_date, x.se_end_date)));
 
 			CreateMap<UsersDTOForCreating, Users>();
 			CreateMap<CoursesDTOForCreating, Courses>();
 			CreateMap<CourseSectionDTOForCreating, CourseSection>();
+			CreateMap<CourseAssignmentDTOForCreating, CourseAssignment>();
 		}
 	}
 

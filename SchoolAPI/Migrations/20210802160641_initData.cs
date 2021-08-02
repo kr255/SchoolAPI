@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SchoolAPI.Migrations
 {
-    public partial class initialData : Migration
+    public partial class initData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,12 +29,10 @@ namespace SchoolAPI.Migrations
                 {
                     section_enroll_key = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    user_id = table.Column<int>(type: "int", nullable: false),
                     se_created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     se_updated_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     se_start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    se_end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    course_section_id = table.Column<int>(type: "int", nullable: false)
+                    se_end_date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,8 +51,7 @@ namespace SchoolAPI.Migrations
                     enroll_status = table.Column<int>(type: "int", nullable: false),
                     sys_role_id = table.Column<int>(type: "int", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    updated_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    section_enroll_key = table.Column<int>(type: "int", nullable: false)
+                    updated_date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,17 +85,16 @@ namespace SchoolAPI.Migrations
                 name: "StudentSectionEnroll",
                 columns: table => new
                 {
-                    user_id = table.Column<int>(type: "int", nullable: false),
-                    section_enroll_key = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    section_key1 = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    section_key = table.Column<int>(type: "int", nullable: false),
+                    SectionEnrollsection_key = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentSectionEnroll", x => new { x.user_id, x.section_enroll_key });
+                    table.PrimaryKey("PK_StudentSectionEnroll", x => new { x.UserId, x.section_key });
                     table.ForeignKey(
-                        name: "FK_StudentSectionEnroll_SectionEnrolls_section_key1",
-                        column: x => x.section_key1,
+                        name: "FK_StudentSectionEnroll_SectionEnrolls_SectionEnrollsection_key",
+                        column: x => x.SectionEnrollsection_key,
                         principalTable: "SectionEnrolls",
                         principalColumn: "section_enroll_key",
                         onDelete: ReferentialAction.Restrict);
@@ -107,7 +103,7 @@ namespace SchoolAPI.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "user_id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,18 +112,17 @@ namespace SchoolAPI.Migrations
                 {
                     course_assignment_title = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ca_description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    course_section_id = table.Column<int>(type: "int", nullable: false),
-                    sectioncs_id = table.Column<int>(type: "int", nullable: true)
+                    cs_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CourseAssignments", x => x.course_assignment_title);
                     table.ForeignKey(
-                        name: "FK_CourseAssignments_CourseSections_sectioncs_id",
-                        column: x => x.sectioncs_id,
+                        name: "FK_CourseAssignments_CourseSections_cs_id",
+                        column: x => x.cs_id,
                         principalTable: "CourseSections",
                         principalColumn: "course_section_id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,30 +131,25 @@ namespace SchoolAPI.Migrations
                 {
                     cs_id = table.Column<int>(type: "int", nullable: false),
                     section_key = table.Column<int>(type: "int", nullable: false),
-                    courseSectioncs_id = table.Column<int>(type: "int", nullable: true),
-                    section_key1 = table.Column<int>(type: "int", nullable: true)
+                    CourseSectioncs_id = table.Column<int>(type: "int", nullable: true),
+                    SectionEnrollsection_key = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CoursesSectionEnroll", x => new { x.cs_id, x.section_key });
                     table.ForeignKey(
-                        name: "FK_CoursesSectionEnroll_CourseSections_courseSectioncs_id",
-                        column: x => x.courseSectioncs_id,
+                        name: "FK_CoursesSectionEnroll_CourseSections_CourseSectioncs_id",
+                        column: x => x.CourseSectioncs_id,
                         principalTable: "CourseSections",
                         principalColumn: "course_section_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CoursesSectionEnroll_SectionEnrolls_section_key1",
-                        column: x => x.section_key1,
+                        name: "FK_CoursesSectionEnroll_SectionEnrolls_SectionEnrollsection_key",
+                        column: x => x.SectionEnrollsection_key,
                         principalTable: "SectionEnrolls",
                         principalColumn: "section_enroll_key",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.InsertData(
-                table: "CourseAssignments",
-                columns: new[] { "course_assignment_title", "ca_description", "course_section_id", "sectioncs_id" },
-                values: new object[] { "Testing Title Man", "Description of Title", 999, null });
 
             migrationBuilder.InsertData(
                 table: "Courses",
@@ -173,23 +163,32 @@ namespace SchoolAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "SectionEnrolls",
-                columns: new[] { "section_enroll_key", "course_section_id", "se_created_date", "se_end_date", "se_start_date", "se_updated_date", "user_id" },
-                values: new object[] { 9, 999, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 999 });
+                columns: new[] { "section_enroll_key", "se_created_date", "se_end_date", "se_start_date", "se_updated_date" },
+                values: new object[] { 9, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "user_id", "created_date", "email", "enroll_status", "name", "password", "section_enroll_key", "sys_role_id", "updated_date" },
-                values: new object[] { 999, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "testStudent@school.com", 0, "Test User", "TESTtest", 0, 0, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "user_id", "created_date", "email", "enroll_status", "name", "password", "sys_role_id", "updated_date" },
+                values: new object[,]
+                {
+                    { 999, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "testStudent@school.com", 0, "Test User", "TESTtest", 0, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 99, new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "testStudent2@school.com", 1, "Test User 2", "TESTtest2", 0, new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
 
             migrationBuilder.InsertData(
                 table: "CourseSections",
                 columns: new[] { "course_section_id", "courseid", "cs_create_date", "cs_end_date", "cs_start_date", "cs_update_date" },
                 values: new object[] { 999, 99, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CourseAssignments_sectioncs_id",
+            migrationBuilder.InsertData(
                 table: "CourseAssignments",
-                column: "sectioncs_id");
+                columns: new[] { "course_assignment_title", "ca_description", "cs_id" },
+                values: new object[] { "Testing Title Man", "Description of Title", 999 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseAssignments_cs_id",
+                table: "CourseAssignments",
+                column: "cs_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseSections_courseid",
@@ -197,24 +196,19 @@ namespace SchoolAPI.Migrations
                 column: "courseid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoursesSectionEnroll_courseSectioncs_id",
+                name: "IX_CoursesSectionEnroll_CourseSectioncs_id",
                 table: "CoursesSectionEnroll",
-                column: "courseSectioncs_id");
+                column: "CourseSectioncs_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoursesSectionEnroll_section_key1",
+                name: "IX_CoursesSectionEnroll_SectionEnrollsection_key",
                 table: "CoursesSectionEnroll",
-                column: "section_key1");
+                column: "SectionEnrollsection_key");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentSectionEnroll_section_key1",
+                name: "IX_StudentSectionEnroll_SectionEnrollsection_key",
                 table: "StudentSectionEnroll",
-                column: "section_key1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentSectionEnroll_UserId",
-                table: "StudentSectionEnroll",
-                column: "UserId");
+                column: "SectionEnrollsection_key");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

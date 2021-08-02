@@ -8,13 +8,10 @@ namespace Entities.Models
 {
     public class StudentSectionEnroll
     {
-        [Column("user_id")]
-
-        public int user_id { get; set; }
-        public Users user { get; set; }
+        public int UserId { get; set; }
+        public Users User { get; set; }
         
-        [Column("section_enroll_key")]
         public int section_key { get; set; }
-        public SectionEnroll section { get; set; }
+        public SectionEnroll SectionEnroll { get; set; }
     }
 }

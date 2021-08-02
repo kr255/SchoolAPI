@@ -17,8 +17,8 @@ namespace Entities.Models
 
 
         [ForeignKey(nameof(CourseSection))]
-        public int course_section_id { get; set; }
-        public CourseSection section { get; set; }
+        public int cs_id { get; set; }
+        public CourseSection CourseSection { get; set; }
 
     }
 }

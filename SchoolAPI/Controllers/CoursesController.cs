@@ -74,7 +74,7 @@ namespace SchoolAPI.Controllers
             _repository.Save();
 
             var courseToReturn = _mapper.Map<CoursesDTO>(courseEntity);
-            return CreatedAtRoute("CourseById", new { cid = courseToReturn.course_id }, courseToReturn);
+            return CreatedAtRoute("CourseById", new { cid = courseToReturn.courseid }, courseToReturn);
         }
 
 
