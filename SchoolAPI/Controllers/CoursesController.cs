@@ -94,6 +94,28 @@ namespace SchoolAPI.Controllers
 
             return NoContent();
         }
+        [HttpPut("{cid}")]
+        public IActionResult UpdateCourse(int cid, [FromBody] CoursesDTOForUpdating course)
+        {
+            if (course == null)
+            {
+
+                _logger.LogError("CoursesDTOForCreating object sent from client is null.");
+                return BadRequest("CoursesDTOForCreating object is null");
+            }
+            var courseEntity = _repository.Courses.GetCourseById(cid, trackChanges: true);
+            if (courseEntity == null)
+            {
+
+                _logger.LogError("courseEntity object  is null.");
+                return BadRequest("courseEntity object is null");
+            }
+            _mapper.Map(course, courseEntity);
+            _repository.Save();
+
+            return NoContent();
+
+        }
 
 
     }

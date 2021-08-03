@@ -36,8 +36,11 @@ namespace SchoolAPI {
 					opt => opt.MapFrom(x => string.Join(' ', x.section_key, x.se_created_date, x.se_updated_date, x.se_start_date, x.se_end_date)));
 
 			CreateMap<UsersDTOForCreating, Users>();
+			CreateMap<UsersDTOForUpdating, Users>();
 			CreateMap<CoursesDTOForCreating, Courses>();
+			CreateMap<CoursesDTOForUpdating, Courses>();
 			CreateMap<CourseSectionDTOForCreating, CourseSection>();
+			CreateMap<CourseSectionDTOForUpdating, CourseSection>();
 			CreateMap<CourseAssignmentDTOForCreating, CourseAssignment>();
 		}
 	}

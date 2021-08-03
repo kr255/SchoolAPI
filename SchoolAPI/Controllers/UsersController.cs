@@ -136,6 +136,25 @@ namespace SchoolAPI.Controllers
             _repository.Save();
             return NoContent();
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(int id, [FromBody] UsersDTOForUpdating user)
+        {
+            if (user == null)
+            {
 
+                _logger.LogError("UsersDTOForCreating object sent from client is null.");
+                return BadRequest("UsersDTOForCreating object is null");
+            }
+            var userEntity = _repository.Users.GetUser(id, trackChanges: true);
+            if (userEntity == null)
+            {
+                _logger.LogInfo($"User with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(user, userEntity);
+            _repository.Save();
+            return NoContent();
+
+        }
     }
 }

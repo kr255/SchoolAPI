@@ -93,7 +93,7 @@ namespace SchoolAPI.Controllers
                                                                 catitle = AssignmentEntity.ca_title}, assignmentToReturn);
         }
         [HttpDelete("catitle")]
-        public IActionResult DeleteAssignmentByTitle(string catitle)
+        public IActionResult DeleteAssignmentByTitle(int courseSection, string catitle)
         {
             var AllCoursesAssignments = _repository.CourseAssignment.GetAllAssignments(courseSection, trackChanges: false);
             if (AllCoursesAssignments == null)

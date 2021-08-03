@@ -124,5 +124,33 @@ namespace SchoolAPI.Controllers
             return NoContent();
         }
 
+        [HttpPut("{csid}")]
+        public IActionResult UpdateCourseSection(int course, int csid, [FromBody] CourseSectionDTOForUpdating section)
+        {
+            if (section == null)
+            {
+                _logger.LogError("CourseSectionDTOForCreating object sent from client is null.");
+                return BadRequest("CourseSectionDTOForCreating object is null");
+            }
+            var Acourse = _repository.Courses.GetCourseById(course, trackChanges: false);
+            if (Acourse == null)
+            {
+
+                _logger.LogInfo($"Course with id: {course} doesn't exist in the database.");
+                return NotFound();
+
+            }
+            var sectionEntity = _repository.CourseSection.GetSectionById(course, csid, trackChanges: true);
+            if (sectionEntity == null) 
+            {
+                _logger.LogInfo($"Section with id: {course} doesn't exist in the database."); 
+                return NotFound();
+            }
+
+            _mapper.Map(section, sectionEntity);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }
