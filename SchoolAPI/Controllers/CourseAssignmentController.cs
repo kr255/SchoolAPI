@@ -92,7 +92,20 @@ namespace SchoolAPI.Controllers
                                                                 courseSection,
                                                                 catitle = AssignmentEntity.ca_title}, assignmentToReturn);
         }
-
+        [HttpDelete("catitle")]
+        public IActionResult DeleteAssignmentByTitle(string catitle)
+        {
+            var AllCoursesAssignments = _repository.CourseAssignment.GetAllAssignments(courseSection, trackChanges: false);
+            if (AllCoursesAssignments == null)
+            {
+                _logger.LogInfo($"Assignments doesn't exist in the database.");
+                return NotFound();
+            }
+            var coursesAssignments = _repository.CourseAssignment.GetAssignment(AllCoursesAssignments, catitle, trackChanges: false);
+            _repository.CourseAssignment.DeleteAssignment(coursesAssignments);
+            _repository.Save();
+            return NoContent();
+        }
 
     }
 }

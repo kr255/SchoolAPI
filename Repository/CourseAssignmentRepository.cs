@@ -21,6 +21,11 @@ namespace Repository
 
         }
 
+        public void DeleteAssignment(CourseAssignment assignment)
+        {
+            Delete(assignment);
+        }
+
         public IEnumerable<CourseAssignment> GetAllAssignments(int courseSection, bool trackChanges) =>
          FindByCondition(e => e.cs_id.Equals(courseSection), trackChanges)
         .OrderBy(c => c.cs_id)
