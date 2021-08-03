@@ -30,7 +30,7 @@ namespace SchoolAPI.Controllers
         {
 
             var sectionEnroll = _repository.SectionEnroll.GetAllEnrollSections(trackChanges: false);
-            var sectionEnrollDTO = _mapper.Map<SectionEnrollDTO>(sectionEnroll);
+            var sectionEnrollDTO = _mapper.Map<SectionEnrollDTO>(sectionEnroll); 
             return Ok(sectionEnrollDTO);
         }
        
