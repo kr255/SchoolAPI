@@ -12,6 +12,7 @@ namespace Entities.Models
         [Key]
         [Column("course_assignment_title")]
 
+        // would do string cleaning here if it were required
         public string ca_title { get; set; }
         public string ca_description { get; set; }
 

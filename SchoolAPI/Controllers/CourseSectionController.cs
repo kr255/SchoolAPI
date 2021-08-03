@@ -12,7 +12,7 @@ using Entities.Models;
 namespace SchoolAPI.Controllers
 {
     [ApiController]
-    [Route("api/{course}")]
+    [Route("api/course/{course}/section")]
     public class CourseSectionController : ControllerBase
     {
         private ILoggerManager _logger;
@@ -95,6 +95,33 @@ namespace SchoolAPI.Controllers
 
             var sectionToReturn = _mapper.Map<CourseSectionDTO>(sectionEntity);
             return CreatedAtRoute("SectionByCourse", new { course, csid = sectionToReturn.cs_id}, sectionToReturn);
+        }
+
+        [HttpDelete("{section}")]
+        public IActionResult DeleteSectionForCourse(int course, int section)
+        { 
+            var Acourse = _repository.Courses.GetCourseById(course, trackChanges: false);
+
+
+            if (Acourse == null)
+            {
+
+                _logger.LogInfo($"Course with id: {course} doesn't exist in the database.");
+                return NotFound();
+
+            }
+            var AcourseSection = _repository.CourseSection.GetSectionById(course, section, trackChanges: false);
+            if (AcourseSection == null)
+            {
+
+                _logger.LogInfo($"Course with id: {course} doesn't exist in the database.");
+                return NotFound();
+
+            }
+            _repository.CourseSection.DeleteSection(AcourseSection);
+            _repository.Save();
+
+            return NoContent();
         }
 
     }

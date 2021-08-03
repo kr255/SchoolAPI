@@ -12,7 +12,7 @@ using Entities.Models;
 namespace SchoolAPI.Controllers
 {
     [ApiController]
-    [Route("api/courses")]
+    [Route("api/course")]
     public class CoursesController : ControllerBase
     {
         private ILoggerManager _logger;
@@ -75,6 +75,24 @@ namespace SchoolAPI.Controllers
 
             var courseToReturn = _mapper.Map<CoursesDTO>(courseEntity);
             return CreatedAtRoute("CourseById", new { cid = courseToReturn.courseid }, courseToReturn);
+        }
+
+        [HttpDelete("{cid}")]
+        public IActionResult DeleteCourse(int cid)
+        { 
+        
+            var course = _repository.Courses.GetCourseById(cid, trackChanges: false);
+            if (course == null)
+            {
+
+                _logger.LogInfo($"Course with id: {cid} doesn't exist in the database.");
+                return NotFound();
+
+            }
+            _repository.Courses.DeleteCourse(course);
+            _repository.Save();
+
+            return NoContent();
         }
 
 

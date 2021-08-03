@@ -14,7 +14,8 @@ namespace Entities.Models
         public DateTime cs_update_date { get; set; }
         public DateTime cs_start_date { get; set; }
         public DateTime cs_end_date { get; set; }
-        //public ICollection<CourseAssignment> courseAssignments { get; set; }
+        
+        public ICollection<CourseAssignment> courseAssignment { get; set; }
 
         [ForeignKey(nameof(Courses))]
         public int courseid { get; set; }

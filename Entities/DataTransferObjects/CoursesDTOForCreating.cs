@@ -12,7 +12,10 @@ namespace Entities.DataTransferObjects
         public DateTime course_created_date { get; set; }
         public DateTime course_updated_date { get; set; }
 
-       // public string FullRecord { get; set; }
+        public IEnumerable<CourseSectionDTOForCreating> coursesection { get; set; }
+
+
+        // public string FullRecord { get; set; }
 
     }
 }

@@ -16,6 +16,6 @@ namespace Entities.Models
         public DateTime course_created_date { get; set; }
         public DateTime course_updated_date { get; set; }
 
-        //ICollection<CourseSection> courseSection { get; set; }
+        public ICollection<CourseSection> coursesection { get; set; }
     }
 }

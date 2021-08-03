@@ -24,5 +24,9 @@ namespace Repository
 
         public void CreateCourse(Courses course) => Create(course);
 
+        public void DeleteCourse(Courses course)
+        {
+            Delete(course);
+        }
     }
 }

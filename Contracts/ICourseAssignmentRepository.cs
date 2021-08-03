@@ -6,10 +6,11 @@ namespace Contracts
 {
     public interface ICourseAssignmentRepository
     {
-        IEnumerable<CourseAssignment> GetAllAssignments(bool trackChanges);
-        CourseAssignment GetAssignment(string title, bool trackChanges);
+        IEnumerable<CourseAssignment> GetAllAssignments(int courseSection, bool trackChanges);
+        CourseAssignment GetAssignment(IEnumerable<CourseAssignment> AllAssignments, string title, bool trackChanges);
 
-        void CreateAssignment(int cid, int csid, CourseAssignment assignment);
+        //void DeleteAssignment(CourseAssignment assignment);
+        void CreateAssignment(int csid, CourseAssignment assignment);
 
 
 

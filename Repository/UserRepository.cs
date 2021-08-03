@@ -23,5 +23,14 @@ namespace Repository
             .SingleOrDefault();
 
         public void CreateUser(Users user) => Create(user);
+
+        public IEnumerable<Users> GetUsersById(IEnumerable<int> ids, bool trackChanges) =>
+            FindByCondition(x => ids.Contains(x.UserId), trackChanges)
+            .ToList();
+
+        public void DeleteUser(Users user)
+        {
+            Delete(user);
+        }
     }
 }

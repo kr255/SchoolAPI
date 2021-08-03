@@ -11,6 +11,7 @@ namespace Contracts
         public Courses GetCourseById(int courseID, bool trackChanges);
 
         public void CreateCourse(Courses course);
+        public void DeleteCourse(Courses course);
 
     }
 }

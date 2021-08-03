@@ -12,7 +12,7 @@ using Entities.Models;
 namespace SchoolAPI.Controllers
 {
     [ApiController]
-    [Route("api/{course}/{courseSection}/assignments", Name ="Default")]
+    [Route("api/course/{course}/section/{courseSection}/assignment", Name ="Default")]
     public class CourseAssignmentController : ControllerBase
     {
         private ILoggerManager _logger;
@@ -27,25 +27,37 @@ namespace SchoolAPI.Controllers
 
         }
         [HttpGet]
-        public IActionResult GetCourseAssignments()
+        public IActionResult GetCourseAssignments(int course, int courseSection)
         {
-            var coursesAssignments = _repository.CourseAssignment.GetAllAssignments(trackChanges: false);
+            //add the if condition for null courseSection Assignment
+            var Asection = _repository.CourseSection.GetSectionById(course, courseSection, trackChanges: false);
+            var coursesAssignments = _repository.CourseAssignment.GetAllAssignments(courseSection, trackChanges: false);
+            if (Asection == null)
+            {
+
+                _logger.LogInfo($"Section with id: {Asection} doesn't exist in the database.");
+                return NotFound();
+
+            }
+            
             var CourseAssignmentDTO = _mapper.Map<IEnumerable<CourseAssignmentDTO>>(coursesAssignments);
             return Ok(CourseAssignmentDTO);
 
         }
         [HttpGet("{catitle}", Name = "assignmentByTitile")]
-        public IActionResult GetCourseAssignment(string title)
+        public IActionResult GetCourseAssignment(int course, int courseSection, string catitle)
         {
-            var coursesAssignments = _repository.CourseAssignment.GetAssignment(title, trackChanges: false) ;
-            if (coursesAssignments == null)
+            var AllCoursesAssignments = _repository.CourseAssignment.GetAllAssignments(courseSection, trackChanges: false);
+            if (AllCoursesAssignments == null)
             {
-                _logger.LogInfo($"Assignment with title: {title} doesn't exist in the database.");
+                _logger.LogInfo($"Assignments doesn't exist in the database.");
                 return NotFound();
             }
             else
             {
-                var CourseAssignmentDTO = _mapper.Map<IEnumerable<CourseAssignmentDTO>>(coursesAssignments);
+                var coursesAssignments = _repository.CourseAssignment.GetAssignment(AllCoursesAssignments, catitle, trackChanges: false);
+                //var OneAssignment = coursesAssignments.Select(t => t.ca_title.Trim().ToLower().Equals(title.Trim().ToLower())).SingleOrDefault();
+                var CourseAssignmentDTO = _mapper.Map<CourseAssignmentDTO>(coursesAssignments);
                 return Ok(CourseAssignmentDTO);
             }
 
@@ -71,11 +83,14 @@ namespace SchoolAPI.Controllers
             }
             var AssignmentEntity = _mapper.Map<CourseAssignment>(assignment);
 
-            _repository.CourseAssignment.CreateAssignment(course, courseSection, AssignmentEntity);
+            _repository.CourseAssignment.CreateAssignment(courseSection, AssignmentEntity);
             _repository.Save();
 
             var assignmentToReturn = _mapper.Map<CourseAssignmentDTO>(AssignmentEntity);
-            return CreatedAtRoute("Default", new { course, courseSection, V = "assignments", catitle= AssignmentEntity.ca_title}, assignmentToReturn);
+            return CreatedAtRoute("assignmentByTitile", new { /*course, courseSection, V = "assignments",*/
+                                                                course,
+                                                                courseSection,
+                                                                catitle = AssignmentEntity.ca_title}, assignmentToReturn);
         }
 
 

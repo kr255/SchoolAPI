@@ -19,6 +19,11 @@ namespace Repository
             Create(section);
         }
 
+        public void DeleteSection(CourseSection section)
+        {
+            Delete(section);
+        }
+
         public IEnumerable<CourseSection> GetAllSections(int cid, bool trackChanges) =>
          FindByCondition(c=> c.courseid.Equals(cid), trackChanges)
         .OrderBy(c => c.courseid)
@@ -28,5 +33,7 @@ namespace Repository
             FindByCondition(c => c.courseid.Equals(cid) &&
                             c.cs_id.Equals(csid), trackChanges)
             .SingleOrDefault();
+
+
     }
 }

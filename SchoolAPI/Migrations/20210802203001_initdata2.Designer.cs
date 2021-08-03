@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SchoolAPI.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210802160641_initData")]
-    partial class initData
+    [Migration("20210802203001_initdata2")]
+    partial class initdata2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,6 +110,7 @@ namespace SchoolAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("courseid");
+
                     b.ToTable("Courses");
 
                     b.HasData(

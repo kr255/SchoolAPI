@@ -14,6 +14,7 @@ namespace Entities.DataTransferObjects
         public DateTime cs_end_date { get; set; }
 
         //public string FullRecord { get; set; }
+        public IEnumerable<CourseAssignmentDTOForCreating> courseAssignment { get; set; }
 
     }
 }

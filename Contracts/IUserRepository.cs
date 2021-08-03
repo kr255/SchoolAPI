@@ -10,7 +10,9 @@ namespace Contracts
         IEnumerable<Users> GetAllUsers(bool trackChanges);
         Users GetUser(int id, bool trackChanges);
 
+        IEnumerable<Users> GetUsersById(IEnumerable<int> ids, bool trackChanges);
         void CreateUser(Users user);
+        void DeleteUser(Users user);
 
     }
 }
