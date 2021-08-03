@@ -106,6 +106,32 @@ namespace SchoolAPI.Controllers
             _repository.Save();
             return NoContent();
         }
+        [HttpPut("{catitle}")]
+        public IActionResult UpdateAssignment(string catitle, int course, int courseSection, [FromBody] CourseAssignmentDTOForUpdating courseAssignment)
+        {
+            if (courseAssignment == null)
+            {
+                _logger.LogInfo($"courseAssignment is null.");
+                return NotFound();
+            }
+            var AllCoursesAssignments = _repository.CourseAssignment.GetAllAssignments(courseSection, trackChanges: false);
+            if (AllCoursesAssignments == null)
+            {
+                _logger.LogInfo($"Assignments doesn't exist in the database.");
+                return NotFound();
+            }
+            var coursesAssignmentEntity = _repository.CourseAssignment.GetAssignment(AllCoursesAssignments, catitle, trackChanges: true);
+            if (coursesAssignmentEntity == null)
+            {
+                _logger.LogInfo($"coursesAssignment doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(courseAssignment, coursesAssignmentEntity);
+            _repository.Save();
+
+            return NoContent();
+
+        }
 
     }
 }

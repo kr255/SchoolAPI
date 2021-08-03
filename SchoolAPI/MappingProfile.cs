@@ -42,6 +42,7 @@ namespace SchoolAPI {
 			CreateMap<CourseSectionDTOForCreating, CourseSection>();
 			CreateMap<CourseSectionDTOForUpdating, CourseSection>();
 			CreateMap<CourseAssignmentDTOForCreating, CourseAssignment>();
+			CreateMap<CourseAssignmentDTOForUpdating, CourseAssignment>();
 		}
 	}
 
